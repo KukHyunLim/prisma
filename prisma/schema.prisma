@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model account_balance {
+  account_balance_seq Int       @default(autoincrement()) @id
+  company_seq         Int
+  desc                String?
+  date                DateTime?
+  memo                String?
+  volume              Int?
+  deposit             Int?
+  type                String?
+  is_apply            String?
+  tax_nominal         String?
+}
+
+model budget {
+  budget_seq          Int       @default(autoincrement()) @id
+  project_seq         Int
+  desc                String?
+  price               Int?
+  expect_date         DateTime?
+  excute_date         DateTime?
+  status              String?
+  account_balance_seq Int?
+}
+
+model company {
+  company_seq        Int     @default(autoincrement()) @id
+  company_number     String?
+  name               String?
+  ceo_name           String?
+  address            String?
+  phone              String?
+  establishment_date Int?
+  is_open            String?
+  e_mail             String? @map("e-mail")
+  image              String?
+  pro                String?
+  registration       String?
+  stamp              String?
+}
+
+model excution {
+  excution_seq        Int       @default(autoincrement()) @id
+  plan_seq            Int
+  account_balance_seq Int?
+  price               Int?
+  date                DateTime?
+  person_name         String?
+}
+
+model fixed_cost {
+  fcost_seq           Int     @default(autoincrement()) @id
+  company_seq         Int
+  fctype              String?
+  account_balance_seq Int?
+}
+
+model image {
+  image_seq   Int     @default(autoincrement()) @id
+  project_seq Int?
+  name        String?
+  type        String?
+}
+
+model image_history {
+  history_seq Int       @default(autoincrement()) @id
+  image_seq   Int
+  user_seq    Int?
+  name        String?
+  upload_date DateTime?
+  type        String?
+}
+
+model opinion {
+  opinion_seq Int       @default(autoincrement()) @id
+  user_seq    Int
+  desc        String?
+  date        DateTime?
+  status      String?
+}
+
+model part {
+  part_seq    Int     @default(autoincrement()) @id
+  company_seq Int
+  name        String?
+}
+
+model plan {
+  plan_seq      Int     @default(autoincrement()) @id
+  project_seq   Int
+  main_category String?
+  plan_price    Int?
+  description   String?
+  unit          Int?
+  amount        Float?
+  zero_tax_rate String?
+  is_profit     String?
+}
+
+model project {
+  project_seq          Int       @default(autoincrement()) @id
+  company_seq          Int?
+  manager              Int?
+  proj_name            String?
+  start_date           DateTime?
+  end_date             DateTime?
+  contractor_name      String
+  contractor_number    String?
+  status               String?
+  suggest_price        Int?
+  suggest_user         Int?
+  assign_date          DateTime?
+  assign_user          Int
+  real_price           Int?
+  estimate_link        String?
+  contract_link        String?
+  is_additional_profit String?
+  is_project           String?
+}
+
+model service {
+  service_seq       Int     @default(autoincrement()) @id
+  company_seq       Int
+  correspondent_seq Int?
+  service_name      String?
+  price             Int?
+}
+
+model service_payment {
+  service_payment_seq Int       @default(autoincrement()) @id
+  service_seq         Int
+  date                DateTime?
+  price               Int?
+}
+
+model user {
+  user_seq       Int     @default(autoincrement()) @id
+  part_seq       Int?
+  company_seq    Int
+  user_name      String?
+  id             String?
+  pass           String?
+  email          String?
+  role           String?
+  group          String?
+  uid            String?
+  svc_client     String?
+  active_filters String?
+}
